@@ -1,4 +1,37 @@
-# Expense Tracker & Budget Manager
+# Expense Tracker
+
+Aplicação de finanças pessoais com uma versão web em **HTML, CSS e JavaScript**, usando **localStorage**. A versão Python foi preservada em `versao-python/`.
+
+## Executar a versão web
+
+Abra [versao-web/index.html](versao-web/index.html) no navegador. Não há dependências nem compilação.
+
+Para usar uma origem local estável, execute na raiz do projeto:
+
+```sh
+python3 -m http.server 8000 --bind 127.0.0.1 --directory versao-web
+```
+
+Acesse **http://localhost:8000**. Mantenha o mesmo endereço, porta e perfil do navegador para acessar os mesmos dados.
+
+## Recursos
+
+- Cadastro, edição e exclusão confirmada de receitas e despesas.
+- Saldo, receitas, despesas e distribuição por categoria, por mês ou em todos os períodos.
+- Busca por descrição, filtros por tipo, categoria e intervalo de datas, com paginação.
+- Orçamento mensal total e por categoria, com avisos em 80% e 100%.
+- Backup JSON com restauração validada e confirmação de substituição.
+- Exportação CSV dos lançamentos filtrados.
+
+Os dados ficam no navegador, sem sincronização automática entre dispositivos. Limpar os dados do site ou usar outro navegador/origem altera o acesso aos registros. Exporte backups regularmente. A persistência em `file://` depende do navegador; prefira HTTP local para uso contínuo.
+
+Consulte [a documentação da versão web](versao-web/README.md) para arquitetura, testes, limites e recuperação. O [perfil de design](versao-web/docs/perfil-de-design.md) registra a proposta visual com base no guia local.
+
+## Referências e ideias anteriores
+
+Os apontamentos abaixo foram preservados como histórico. As menções a React, Node.js e bancos de dados não representam a implementação atual.
+
+### Expense Tracker & Budget Manager
     Real world use case: Personal finance management
         - Income and expense tracking
         - Monthly budget creation

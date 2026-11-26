@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102f29">
+  <meta name="description" content="Organize receitas, despesas e orçamentos. Seus dados ficam neste navegador, sob seu controle.">
+  <title>Expense Tracker — Suas finanças, com clareza</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/domain.js" defer></script>
+  <script src="js/storage.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+  <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M20 8V5a2 2 0 0 0-2-2H6a3 3 0 0 0 0 6h14v11H6a3 3 0 0 1-3-3V6m17 6h-5v5h5m-3-2.5h.01"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></symbol>
+    <symbol id="i-backup" viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M4 15v5h16v-5"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="m15 5 4 4M4 20l5-1L20 8a2.8 2.8 0 0 0-4-4L5 15l-1 5Z"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7m4-7v7"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 5-8 9-8 9S4 17 4 12V6l8-3Z"/><path d="m8 12 3 3 5-6"/></symbol>
+    <symbol id="i-income" viewBox="0 0 24 24"><path d="M12 5v14m-5-5 5 5 5-5M5 5H3v16h18V5h-2"/></symbol>
+    <symbol id="i-expense" viewBox="0 0 24 24"><path d="M12 19V5m-5 5 5-5 5 5M5 5H3v16h18V5h-2"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 11h18"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H5v18h14V8l-5-5Zm0 0v5h5M8 12h8m-8 4h5"/></symbol>
+  </svg>
+
+  <aside class="sidebar" aria-label="Navegação do aplicativo">
+    <a class="brand" href="#overview" aria-label="Expense Tracker, início"><span class="brand-mark"><svg class="icon"><use href="#i-wallet"/></svg></span><span>expense<span class="brand-light">tracker</span></span></a>
+    <p class="sidebar-caption">SEU DINHEIRO, SEU CONTROLE</p>
+    <nav class="nav-links" aria-label="Principal">
+      <a href="#overview" class="nav-link active" aria-current="location"><svg class="icon"><use href="#i-grid"/></svg>Visão geral</a>
+      <a href="#transactions" class="nav-link"><svg class="icon"><use href="#i-list"/></svg>Lançamentos</a>
+      <a href="#budgets" class="nav-link"><svg class="icon"><use href="#i-target"/></svg>Orçamentos</a>
+      <a href="#backup" class="nav-link"><svg class="icon"><use href="#i-backup"/></svg>Seus dados</a>
+    </nav>
+    <div class="sidebar-bottom"><svg class="icon"><use href="#i-shield"/></svg><strong>Um espaço só seu.</strong><p>Seus registros ficam salvos neste navegador. Exporte um backup para guardá-los.</p><span class="local-label">Armazenamento local</span></div>
+  </aside>
+
+  <main id="main" class="main" tabindex="-1">
+    <header class="topbar"><span class="breadcrumb">Meu espaço <span aria-hidden="true">/</span> Finanças pessoais</span><span class="device-label"><svg class="icon"><use href="#i-shield"/></svg>Dados neste navegador</span></header>
+    <div class="page-content">
+      <noscript><div class="banner banner-error">Ative o JavaScript no navegador para usar o aplicativo. Seus dados não são enviados a um servidor.</div></noscript>
+      <div id="storage-error" class="banner banner-error" role="alert" hidden><div><strong>Não foi possível acessar seus dados.</strong><p id="storage-error-message"></p></div><button type="button" class="button button-secondary" id="reload-app">Recarregar</button></div>
+      <section id="overview" aria-labelledby="overview-title">
+        <div class="page-heading"><div><p class="eyebrow">CADA ESCOLHA CONTA</p><h1 id="overview-title">Visão geral</h1><p class="subtitle">Um olhar tranquilo sobre a sua vida financeira.</p></div><button type="button" class="button button-primary" data-new-transaction data-write><svg class="icon"><use href="#i-plus"/></svg>Novo lançamento</button></div>
+        <div class="period-bar"><div class="period-control"><svg class="icon"><use href="#i-calendar"/></svg><label for="month-filter">Período</label><select id="month-filter" aria-describedby="period-context"></select></div><p id="period-context">Carregando seus dados…</p></div>
+        <div class="summary-grid" aria-label="Resumo do período">
+          <article class="summary-card balance-card"><div class="summary-card-top"><h2>Saldo do período</h2><svg class="icon"><use href="#i-wallet"/></svg></div><p class="summary-value" id="balance-value">—</p><p class="summary-note">Receitas menos despesas</p></article>
+          <article class="summary-card"><div class="summary-card-top"><h2>Receitas</h2><span class="metric-icon income"><svg class="icon"><use href="#i-income"/></svg></span></div><p class="summary-value" id="income-value">—</p><p class="summary-note" id="income-count">Nenhuma receita no período</p></article>
+          <article class="summary-card"><div class="summary-card-top"><h2>Despesas</h2><span class="metric-icon expense"><svg class="icon"><use href="#i-expense"/></svg></span></div><p class="summary-value" id="expense-value">—</p><p class="summary-note" id="expense-count">Nenhuma despesa no período</p></article>
+        </div>
+      </section>
+
+      <div class="insights-grid">
+        <section class="panel category-panel" aria-labelledby="category-title"><div class="panel-heading"><div><h2 id="category-title">Para onde vai seu dinheiro</h2><p>Despesas por categoria no período</p></div><span class="small-tag">Categorias</span></div><div id="category-chart" aria-live="polite"></div></section>
+        <section class="panel budget-panel" id="budgets" aria-labelledby="budget-title"><div class="panel-heading"><div><h2 id="budget-title">Seu orçamento</h2><p id="budget-period">Planeje os gastos do mês</p></div><span class="panel-icon"><svg class="icon"><use href="#i-target"/></svg></span></div><div id="budget-overview" aria-live="polite"></div><button id="manage-budgets" type="button" class="button button-secondary button-full" data-write>Definir orçamento</button></section>
+      </div>
+
+      <section class="panel transactions-panel" id="transactions" aria-labelledby="transactions-title">
+        <div class="panel-heading"><div><h2 id="transactions-title">Seus lançamentos</h2><p>Pequenos registros. Uma visão mais completa.</p></div><button id="export-csv" type="button" class="button button-text"><svg class="icon"><use href="#i-file"/></svg>Exportar CSV</button></div>
+        <form class="filters" id="filter-form" role="search" aria-label="Filtrar lançamentos">
+          <div class="field search-field"><label for="search-filter">Buscar descrição</label><div class="input-with-icon"><svg class="icon"><use href="#i-search"/></svg><input id="search-filter" type="search" placeholder="Ex.: supermercado" maxlength="120" autocomplete="off"></div></div>
+          <div class="field"><label for="type-filter">Tipo</label><select id="type-filter"><option value="">Todos os tipos</option><option value="expense">Despesas</option><option value="income">Receitas</option></select></div>
+          <div class="field"><label for="category-filter">Categoria</label><select id="category-filter"><option value="">Todas as categorias</option></select></div>
+          <div class="field date-field"><label for="start-filter">De</label><input type="date" id="start-filter" aria-describedby="filter-error" min="0001-01-01" max="9999-12-31"></div>
+          <div class="field date-field"><label for="end-filter">Até</label><input type="date" id="end-filter" aria-describedby="filter-error" min="0001-01-01" max="9999-12-31"></div>
+          <button type="reset" class="button button-text reset-filters" id="reset-filters">Limpar</button>
+        </form>
+        <p class="filter-error" id="filter-error" role="alert" hidden></p>
+        <p class="filter-note">Os filtros desta lista não alteram os indicadores e o orçamento acima.</p>
+        <div class="table-container" id="transaction-table-wrap" tabindex="0" role="region" aria-label="Lançamentos: role horizontalmente se necessário"><table class="transaction-table"><caption class="sr-only">Lançamentos do período e dos filtros selecionados</caption><thead><tr><th scope="col">Descrição</th><th scope="col">Categoria</th><th scope="col">Data</th><th scope="col">Valor</th><th scope="col"><span class="sr-only">Ações</span></th></tr></thead><tbody id="transaction-rows"></tbody></table></div>
+        <div id="transactions-empty" class="empty-state" hidden></div>
+        <footer class="table-footer"><span id="transaction-count" role="status">Carregando lançamentos…</span><div class="pagination"><button type="button" class="button button-small button-secondary" id="previous-page" aria-label="Página anterior">Anterior</button><span id="page-label"></span><button type="button" class="button button-small button-secondary" id="next-page" aria-label="Próxima página">Próxima</button></div></footer>
+      </section>
+
+      <section class="backup-section" id="backup" aria-labelledby="backup-title"><div class="backup-copy"><span class="backup-icon"><svg class="icon"><use href="#i-shield"/></svg></span><div><h2 id="backup-title">Seus dados merecem cuidado.</h2><p>Salvos só neste navegador, sem sincronização. Faça um backup antes de trocar de dispositivo ou limpar os dados do navegador.</p><p class="backup-detail">O arquivo de backup contém seus registros financeiros. Guarde-o em um lugar seguro.</p></div></div><div class="backup-actions"><button type="button" class="button button-secondary" id="import-backup" data-write>Restaurar backup</button><button type="button" class="button button-secondary" id="export-backup"><svg class="icon"><use href="#i-backup"/></svg>Baixar backup</button></div><input type="file" id="backup-file" accept=".json,application/json" hidden></section>
+      <footer class="page-footer"><span>Expense Tracker</span><span>Mais clareza, um lançamento de cada vez.</span></footer>
+    </div>
+  </main>
+
+  <dialog id="transaction-dialog" aria-labelledby="transaction-dialog-title" class="modal"><form id="transaction-form" novalidate><div class="modal-header"><div><p class="eyebrow">ORGANIZE O SEU DIA A DIA</p><h2 id="transaction-dialog-title">Novo lançamento</h2></div><button class="icon-button" type="button" data-close-dialog aria-label="Fechar formulário"><svg class="icon"><use href="#i-close"/></svg></button></div><fieldset class="type-picker"><legend>Tipo de lançamento</legend><label><input type="radio" name="transaction-type" value="expense" checked><span><svg class="icon"><use href="#i-expense"/></svg>Despesa</span></label><label><input type="radio" name="transaction-type" value="income"><span><svg class="icon"><use href="#i-income"/></svg>Receita</span></label></fieldset><div class="field"><label for="transaction-description">Descrição</label><input id="transaction-description" name="description" placeholder="Ex.: compras da semana" required maxlength="120" aria-describedby="error-description"><p id="error-description" class="field-error" hidden></p></div><div class="form-grid"><div class="field"><label for="transaction-amount">Valor (R$)</label><input id="transaction-amount" name="amount" type="text" inputmode="decimal" placeholder="0,00" required aria-describedby="amount-help error-amount"><p id="amount-help" class="field-hint">Ex.: 150,50</p><p id="error-amount" class="field-error" hidden></p></div><div class="field"><label for="transaction-date">Data</label><input id="transaction-date" name="date" type="date" min="0001-01-01" max="9999-12-31" required aria-describedby="error-date"><p id="error-date" class="field-error" hidden></p></div></div><div class="field"><label for="transaction-category">Categoria</label><select id="transaction-category" name="category" required aria-describedby="error-category"></select><p id="error-category" class="field-error" hidden></p></div><p class="form-error" id="transaction-form-error" role="alert" hidden></p><div class="modal-footer"><button type="button" class="button button-secondary" data-close-dialog>Cancelar</button><button type="submit" class="button button-primary" id="save-transaction">Salvar lançamento</button></div></form></dialog>
+
+  <dialog id="budget-dialog" aria-labelledby="budget-dialog-title" class="modal"><form id="budget-form" novalidate><div class="modal-header"><div><p class="eyebrow">UM PLANO PARA O SEU MÊS</p><h2 id="budget-dialog-title">Definir orçamento</h2></div><button class="icon-button" type="button" data-close-dialog aria-label="Fechar orçamento"><svg class="icon"><use href="#i-close"/></svg></button></div><p class="modal-description" id="budget-dialog-period"></p><div class="field"><label for="budget-total">Limite total de despesas (R$)</label><input id="budget-total" type="text" inputmode="decimal" placeholder="Ex.: 3.000,00" aria-describedby="budget-help budget-form-error"><p class="field-hint" id="budget-help">Deixe em branco para remover o limite. Os limites por categoria são independentes.</p></div><details class="category-budget-details"><summary>Limites por categoria <span class="field-hint">Opcional</span></summary><div id="category-budget-fields" class="form-grid"></div></details><p class="form-error" id="budget-form-error" role="alert" hidden></p><div class="modal-footer"><button type="button" class="button button-secondary" data-close-dialog>Cancelar</button><button type="submit" class="button button-primary" id="save-budget">Salvar orçamento</button></div></form></dialog>
+
+  <dialog id="confirm-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-message" class="modal modal-small"><form method="dialog"><div class="modal-header"><h2 id="confirm-title">Confirmar ação</h2><button class="icon-button" type="button" data-close-dialog aria-label="Cancelar ação"><svg class="icon"><use href="#i-close"/></svg></button></div><p id="confirm-message" class="modal-description"></p><p class="form-error" id="confirm-error" role="alert" hidden></p><div class="modal-footer"><button type="button" class="button button-secondary" data-close-dialog autofocus>Cancelar</button><button type="button" class="button button-danger" id="confirm-action">Confirmar</button></div></form></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+</body>
+</html>
